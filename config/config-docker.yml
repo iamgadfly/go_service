@@ -1,0 +1,41 @@
+server:
+  AppVersion: 1.0.0
+  Port: :8000
+  PprofPort: :8888
+  Mode: Development
+  JwtSecretKey: secretkey
+  CookieName: jwt-token
+  ReadTimeout: 5
+  WriteTimeout: 5
+  SSL: false
+  CtxDefaultTimeout: 12
+  CSRF: true
+  Debug: false
+
+logger:
+  Development: true
+  DisableCaller: false
+  DisableStacktrace: false
+  Encoding: json
+  Level: info
+
+mysql:
+  IsDocker: true
+  MysqlHost: db
+  MysqlPort: 8001
+  MysqlUser: go
+  MysqlPassword: 12345678
+  MysqlDbname: go_api
+  # on Mac connect to database, on linux connect other.
+  MysqlConnect: go:12345678@tcp(host.docker.internal:3310)/go_api
+
+cookie:
+  Name: jwt-token
+  MaxAge: 86400
+  Secure: false
+  HttpOnly: true
+
+session:
+  Name: session-id
+  Prefix: api-session
+  Expire: 3600

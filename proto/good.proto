@@ -1,0 +1,61 @@
+syntax = "proto3";
+option go_package = "github.com/iamgadfly/go-service/proto/good";
+
+package good;
+
+service Good {
+    rpc Create(CreateRequest) returns (GoodResponse);
+    rpc Update(UpdateRequest) returns (GoodResponse);
+    rpc Remove(RemoveRequest) returns (RemoveResponse);
+    rpc List(ListRequest) returns (ListResponse);
+}
+
+message CreateRequest {
+  uint64 project_id = 1;
+  string name = 2;
+}
+
+message UpdateRequest {
+  uint64 id = 1;
+  uint64 project_id = 2;
+  string name = 3;
+  string description = 4;
+}
+
+message RemoveRequest {
+  uint64 id = 1;
+  uint64 project_id = 2;
+}
+
+message ListRequest {
+  uint64 limit = 1;
+  uint64 offset = 2;
+}
+
+message Meta {
+  uint64 total = 1;
+  uint64 removed = 2;
+  uint64 limit = 3;
+  uint64 offset = 4;
+}
+
+message ListResponse {
+  Meta meta = 1;
+  repeated GoodResponse goods = 2;
+}
+
+message RemoveResponse {
+  uint64 id = 1;
+  uint64  campaginId = 2;
+  bool removed = 3;
+}
+
+message GoodResponse {
+  uint64 id = 1;
+  uint64 project_id = 2;
+  string name = 3;
+  string description = 4;
+  int64 priority = 5;
+  bool removed = 6;
+  string created_at = 7;
+}

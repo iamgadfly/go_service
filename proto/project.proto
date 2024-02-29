@@ -1,0 +1,18 @@
+syntax = "proto3";
+option go_package = "github.com/iamgadfly/go-service/proto/project";
+
+package project;
+
+service Project {
+    rpc Create(CreateRequest) returns (ProjectResponse);
+}
+
+message CreateRequest {
+  string name = 1;
+}
+
+message ProjectResponse {
+  uint64 id = 1;
+  string name = 2;
+  string created_at = 3;
+}

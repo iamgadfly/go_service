@@ -1,0 +1,185 @@
+basePath: /
+definitions:
+  models.CreateGoodReq:
+    properties:
+      name:
+        type: string
+    type: object
+  models.CreateProjectReq:
+    properties:
+      name:
+        type: string
+    type: object
+  models.Good:
+    properties:
+      created_at:
+        type: string
+      description:
+        type: string
+      id:
+        type: integer
+      name:
+        maxLength: 30
+        minLength: 1
+        type: string
+      priority:
+        type: integer
+      project_id:
+        type: integer
+      removed:
+        type: boolean
+      removed_count:
+        type: integer
+    required:
+    - name
+    type: object
+  models.GoodList:
+    properties:
+      goods:
+        items:
+          $ref: '#/definitions/models.Good'
+        type: array
+      limit:
+        type: integer
+      offset:
+        type: integer
+      removed:
+        type: integer
+      total:
+        type: integer
+    type: object
+  models.PriorityReq:
+    properties:
+      newPriority:
+        type: integer
+    required:
+    - newPriority
+    type: object
+  models.PriorityResp:
+    properties:
+      id:
+        type: integer
+      priority:
+        type: integer
+    type: object
+  models.Project:
+    properties:
+      created_at:
+        type: string
+      id:
+        type: integer
+      name:
+        maxLength: 30
+        minLength: 1
+        type: string
+    required:
+    - name
+    type: object
+  models.RemoveResp:
+    properties:
+      campaginId:
+        description: видимо id проекта
+        type: integer
+      id:
+        type: integer
+      removed:
+        type: boolean
+    type: object
+  models.UpdateGoodReq:
+    properties:
+      description:
+        type: string
+      name:
+        type: string
+    type: object
+host: localhost:8000
+info:
+  contact: {}
+  description: app
+  title: App GRPC and REST
+  version: "1.0"
+paths:
+  /api/v1/good/create:
+    post:
+      description: Create good
+      parameters:
+      - description: data for create
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/models.CreateGoodReq'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Good'
+      summary: Create Good
+      tags:
+      - goods
+  /api/v1/good/list/{limit}/{offset}:
+    get:
+      description: List good
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.GoodList'
+      summary: List Good
+      tags:
+      - goods
+  /api/v1/good/remove/{id}/{project_id}:
+    delete:
+      description: Reprioritiize good
+      parameters:
+      - description: data for reprioritiize
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/models.PriorityReq'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.PriorityResp'
+      summary: Reprioritiize Good
+      tags:
+      - goods
+  /api/v1/good/update:
+    patch:
+      description: Create good
+      parameters:
+      - description: data for update
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/models.UpdateGoodReq'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Good'
+      summary: Update Good
+      tags:
+      - goods
+  /api/v1/project/create:
+    post:
+      description: Create project
+      parameters:
+      - description: data for create
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/models.CreateProjectReq'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Project'
+      summary: Create project
+      tags:
+      - projects
+swagger: "2.0"
